@@ -17,9 +17,34 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  wallets Wallet[]
+
   @@map("users")
 }
 
 enum UserRole {
   USER
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @map("user_id")
+  currency   Currency @relation(fields: [currencyId], references: [id])
+  currencyId String   @map("currency_id")
+
+  @@map("wallets")
+}
+
+model Currency {
+  id   String @id @default(uuid())
+  name String
+
+  wallets Wallet[]
+
+  @@map("currencies")
 }

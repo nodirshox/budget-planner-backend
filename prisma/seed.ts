@@ -16,6 +16,16 @@ async function main() {
         role: UserRole.USER,
       },
     }),
+    await prisma.currency.createMany({
+      data: [
+        {
+          name: 'UZS',
+        },
+        {
+          name: 'USD',
+        },
+      ],
+    }),
   ]).catch((error) => console.error(error))
 }
 main()
